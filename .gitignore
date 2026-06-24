@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+webhook-backend/node_modules/
+webhook-frontend/node_modules/
+
+# Build output
+dist/
+webhook-frontend/dist/
+
+# Environment files
+.env
+webhook-backend/.env
+webhook-frontend/.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
