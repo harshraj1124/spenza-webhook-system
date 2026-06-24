@@ -65,6 +65,15 @@ Use a real public callback URL while testing delivery. A simple option is
 [webhook.site](https://webhook.site), which gives you a temporary URL where you
 can see the forwarded webhook payloads and the signature headers.
 
+## Design Choices
+
+- **Axios interceptor for auth** — a single request interceptor attaches the JWT token to every outgoing request. A response interceptor catches 401s globally, shows a "Session expired" toast, clears localStorage, and redirects to login — so individual components never need to handle auth errors.
+- **Polling over WebSockets** — the event log refreshes every 7 seconds using `setInterval`. This avoids the complexity of a WebSocket connection while still keeping the log reasonably up to date for a demo system.
+- **Signing secret shown once at creation** — after subscribing, the signing secret is displayed with a one-click copy button. It can also be revealed later from the subscription list. This mirrors how real webhook providers (like Stripe) handle secrets.
+- **Client-side event filtering** — the All / Pending / Delivered / Failed filter buttons filter the already-fetched event list in memory rather than making a new API call per filter. This keeps the UI instant to interact with.
+- **Protected routes** — `ProtectedRoute` checks for a token in localStorage before rendering the dashboard. If missing, it redirects to `/login`. This prevents unauthenticated users from seeing the dashboard even if they navigate directly to the URL.
+- **Controlled forms** — all form inputs use React controlled state (`useState`) rather than uncontrolled refs, making validation and reset straightforward.
+
 ## Full Flow Testing
 
 1. Start MongoDB.
